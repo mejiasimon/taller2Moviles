@@ -10,9 +10,9 @@ import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
 import { TextInput } from "react-native-paper";
 import { styles } from "../styles/styles";
-import { Usuarios } from "../services/information";
+
 console.log(Usuarios)
-// const Usuarios = [];
+const Usuarios = [];
 export default function User({ navigation }) {
   const {
     control,
@@ -33,7 +33,6 @@ export default function User({ navigation }) {
   }
   const [message, setMessage] = useState("");
   const [color, setColor] = useState("");
-  const [showPass, setShowPass] = useState(false);
   function handleSignIn(data) {
     let mailS = data.email;
     let passwordS = data.password;
@@ -44,7 +43,7 @@ export default function User({ navigation }) {
       navigation.navigate("Car",{user:Usuarios});
     }
     else{
-      setMessage("no existe ese usuario o la contraseña es incorrecta")
+      setMessage("no existe ese usuario")
       setColor("red")
     }
   }
@@ -60,11 +59,11 @@ export default function User({ navigation }) {
     if (!find[0]) {
       var Usuario = new UserObject(mailS, passwordS, nameS);
       Usuarios.push(Usuario);
-      setMessage("usuario creado exitosamente");
+      setMessage("usuario creado");
       setColor("green");
       console.log(Usuarios);
     } else {
-      setMessage("ya hay un usuario con ese email");
+      setMessage("ya existe ese usuario");
       setColor("red");
     }
   }
@@ -73,6 +72,7 @@ export default function User({ navigation }) {
     <View
       flex
       style={{
+        backgroundColor:"black",
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -82,7 +82,7 @@ export default function User({ navigation }) {
       <Image
         style={{ height: "12.5rem", width: "12.5rem" }}
         source={{
-          uri: "https://firebasestorage.googleapis.com/v0/b/renting-63833.appspot.com/o/acceso.png?alt=media&token=795d8c69-7763-45e3-88d6-0a77cd5bc41d",
+          uri: "https://firebasestorage.googleapis.com/v0/b/renting-63833.appspot.com/o/pngwing.com.png?alt=media&token=b479ed99-7297-486f-aade-d1807512da95",
         }}
       ></Image>
       <Controller
@@ -95,8 +95,7 @@ export default function User({ navigation }) {
         render={({ field: { onChange, value } }) => (
           <TextInput
             autoFocus
-            label="mail"
-            right={<TextInput.Icon icon="email" />}
+            label="correo electronico"
             onChangeText={onChange}
             value={value}
           ></TextInput>
@@ -104,10 +103,10 @@ export default function User({ navigation }) {
         name="email"
       ></Controller>
       {errors.email?.type == "required" && (
-        <Text style={{ color: "red" }}>el correo es requerido</Text>
+        <Text style={{ color: "white" }}>hace falta el correo</Text>
       )}
       {errors.email?.type == "pattern" && (
-        <Text style={{ color: "red" }}>debe ingresar un correo</Text>
+        <Text style={{ color: "white" }}>debe ingresar un correo valido</Text>
       )}
 
       <Controller
@@ -115,37 +114,25 @@ export default function User({ navigation }) {
         rules={{
           required: true,
           minLength: 6,
-          maxLength: 15,
         }}
         render={({ field: { onChange, value } }) => (
           <TextInput
             autoFocus
             style={{ marginTop: 20 }}
             label="Contraseña"
-            secureTextEntry={!showPass}
+            secureTextEntry={true}
             onChangeText={onChange}
             value={value}
-            right={
-              <TextInput.Icon
-                icon={showPass ? "eye" : "eye-off"}
-                onPress={() => setShowPass(!showPass)}
-              />
-            }
           />
         )}
         name="password"
       ></Controller>
           {errors.password?.type == "required" && (
-        <Text style={{ color: "red" }}>la contraseña es requerida</Text>
+        <Text style={{ color: "white" }}>hace falta la contraseña</Text>
       )}
       {errors.password?.type == "minLength" && (
-        <Text style={{ color: "red" }}>la contraseña debe ser mayor a 6 caracteres</Text>
+        <Text style={{ color: "white" }}>la contraseña debe tener como minimo 6 caracteres</Text>
       )}
-         {errors.password?.type =="maxLength" && (
-        <Text style={{ color: "red" }}>la contraseña debe ser menor a 12 caracteres</Text>
-      )}
-
-
 <Controller
 control={control}
 rules={{
@@ -155,20 +142,19 @@ rules={{
 render={({ field: { onChange, value } }) => (
   <TextInput
   style={{ marginTop: 20 }}
-  label="nombre"
+  label="nombre de usuario"
   onChangeText={onChange}
   value={value}
-  right={<TextInput.Icon icon="account" />}
 /> 
 )}
 name="name"
 >
 </Controller>
 {errors.name?.type == "required" && (
-        <Text style={{ color: "red" }}>el nombre es requerido</Text>
+        <Text style={{ color: "white" }}>hace falta el nombre</Text>
       )}
       {errors.name?.type == "pattern" && (
-        <Text style={{ color: "red" }}>solo se aceptan letras</Text>
+        <Text style={{ color: "white" }}>solo letras admitidas</Text>
       )}
 
 
@@ -184,15 +170,14 @@ name="name"
         }}
       >
         <Button
-          label="SignIn"
+          label="iniciar sesion"
+          icon="account"
           style={styles.button}
-          icon="login"
           onPress={handleSubmit(handleSignIn)}
         ></Button>
         <Button
-          label="Register"
+          label="Registrarse"
           style={styles.button}
-          icon="account"
           onPress={handleSubmit(handleRegister)}
         ></Button>
       </View>

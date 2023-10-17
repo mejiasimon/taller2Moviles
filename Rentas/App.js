@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import User from "./components/User";
 import Rent from "./components/Rent";
 import Car from "./components/Car";
+import vehiculos from "./components/vehiculos";
 const Stack=createStackNavigator()
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       <Stack.Screen name="User" component={User} />
       <Stack.Screen name="Car" component={Car} />
       <Stack.Screen name="Rent" component={Rent} />
+      <Stack.Screen name="vehiculos" component={vehiculos} />
     </Stack.Navigator>
   </NavigationContainer>
 

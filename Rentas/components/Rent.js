@@ -61,34 +61,36 @@ if(filter3[0]){
           var rent=new RentObject(rentNumberS,UserS,plateS,rentDateS)
           rents.push(rent)
           copia[index].state=0
-          setMessage("vehiculo rentado")
+          setMessage("rentado con exito")
       setColor("green")
           break
         }
         }
     }
     else{
-      setMessage("ese vehiculo ya esta siendo arrendado")
+      setMessage("no es posible rentar este vehiculo")
       setColor("red")
     }
   
   }else{
-    setMessage("no existe un vehiculo para renta con esa placa ")
+    setMessage("no existe uese vehiculo")
     setColor("red")
   }
 }
 else{
-  setMessage("ese Usuario no existe")
+  setMessage("este usuario no se encuentra registrado")
   setColor("red")
 }
-
+    }
+    function verVehiculos(){
+      navigation.navigate("vehiculos",{vehiculos:copia})
     }
     return(
-        <View style={{flex:1,justifyContent: "center",alignItems: "center",flexDirection: "column"}}>
+        <View style={{        backgroundColor:"black",flex:1,justifyContent: "center",alignItems: "center",flexDirection: "column"}}>
         <Image
-        style={{ height: "12.5rem", width: "12.5rem" }}
+        style={{ height: "150px", width: "400px",marginBottom:"30px" }}
         source={{
-          uri: "https://firebasestorage.googleapis.com/v0/b/renting-63833.appspot.com/o/car-rental.png?alt=media&token=15068230-1012-488f-9313-ee5ffcae5095",
+          uri: "https://firebasestorage.googleapis.com/v0/b/renting-63833.appspot.com/o/pngegg%20(1).png?alt=media&token=ebca1eb4-33ba-44e2-9efd-9badf2fa5207",
         }}
       ></Image>
 
@@ -97,7 +99,6 @@ else{
         rules={{
           required: true,
           minLength:6,
-          maxLength:12,
           pattern:
           /^[0-9]+$/,
         }}
@@ -113,19 +114,15 @@ else{
         name="rentNumber"
       ></Controller>
       {errors.rentNumber?.type == "required" && (
-        <Text style={{ color: "red" }}>el numero de renta es requerido</Text>
+        <Text style={{ color: "red" }}>hace falta el numero de renta</Text>
       )}
       {errors.rentNumber?.type == "pattern" && (
-        <Text style={{ color: "red" }}>debe ingresar solo numeros</Text>
+        <Text style={{ color: "red" }}>solo numeros admitidos</Text>
       )}
        {errors.rentNumber?.type == "minLength" && (
-        <Text style={{ color: "red" }}>el numero de renta debe tener 6 caracteres</Text>
+        <Text style={{ color: "red" }}>la contraseña debe tener como minimo 6 caracteres</Text>
       )}
-       {errors.rentNumber?.type == "maxLength}" && (
-        <Text style={{ color: "red" }}>el numero de renta no puede ser mayor a 12 caracteres</Text>
-      )}
-
-
+    
       <Controller
         control={control}
         rules={{
@@ -149,10 +146,10 @@ else{
         name="User"
       ></Controller>
           {errors.User?.type == "required" && (
-        <Text style={{ color: "red" }}>tu nombre es requerido</Text>
+        <Text style={{ color: "red" }}>hace falta el nombre</Text>
       )}
         {errors.User?.type == "pattern" && (
-        <Text style={{ color: "red" }}>solo se aceptan letras</Text>
+        <Text style={{ color: "red" }}>solo letras admitidas</Text>
       )}
 
 
@@ -160,7 +157,7 @@ else{
         control={control}
         rules={{
           required: true,
-          pattern: /^([A-Z]{3}-\d{3,4})$/,
+          pattern: /^([A-Z]{3}\d{3,4})$/,
         }}
         render={({ field: { onChange, value } }) => (
           <TextInput
@@ -179,10 +176,10 @@ else{
         name="Plate"
       ></Controller>
           {errors.Plate?.type == "required" && (
-        <Text style={{ color: "red" }}>tu placa es requerida</Text>
+        <Text style={{ color: "red" }}>hace falta la placa</Text>
       )}
    {errors.Plate?.type == "pattern" && (
-        <Text style={{ color: "red" }}>la placa debe tener el formarto ABC-123</Text>
+        <Text style={{ color: "red" }}>la placa debe tener la forma ABC123</Text>
       )}
 
 
@@ -209,10 +206,10 @@ else{
         name="rentDate"
       ></Controller>
           {errors.rentDate?.type == "required" && (
-        <Text style={{ color: "red" }}>la fecha de renta es requerida</Text>
+        <Text style={{ color: "red" }}>hace falta la fecha de renta</Text>
       )}
    {errors.rentDate?.type == "pattern" && (
-        <Text style={{ color: "red" }}>la fecha debe tener el formarto dd-mm-aaaa</Text>
+        <Text style={{ color: "red" }}>la fecha debe tener el formarto internacional dd-mm-aaaa</Text>
       )}
 
 
@@ -226,10 +223,16 @@ else{
         }}
       >
         <Button
-          label="crear"
+          label="rentar"
           style={styles.button}
           icon="login"
           onPress={handleSubmit(Rentar)}
+        ></Button>
+           <Button
+          label="ver vehiculos"
+          style={styles.button}
+          icon="login"
+          onPress={verVehiculos}
         ></Button>
       </View>
 

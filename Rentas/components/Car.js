@@ -42,10 +42,10 @@ return brand==brands && plate==plates
       vehiculo.push(car)
       console.log(vehiculo)
       setMessage("vehiculo creado")
-      setColor("Green")
+      setColor("white")
     }
     else{
-      setMessage("ese vehiculo ya esta registrado")
+      setMessage("ya tenemos ese vehiculo")
       setColor("red")
     }
 
@@ -54,11 +54,11 @@ return brand==brands && plate==plates
 navigation.navigate("Rent",{vehiculo:vehiculo,user:route.params.user})
        }
 return(
-  <View style={{flex:1,justifyContent: "center",alignItems: "center",flexDirection: "column"}}>
+  <View style={{        backgroundColor:"black",flex:1,justifyContent: "center",alignItems: "center",flexDirection: "column"}}>
   <Image
-  style={{ height: "100px", width: "100px",marginBottom:"10px" }}
+  style={{ height: "200px", width: "240px",marginBottom:"10px" }}
   source={{
-    uri: "https://firebasestorage.googleapis.com/v0/b/renting-63833.appspot.com/o/car-wash.png?alt=media&token=ea521cb8-2b34-4d1c-ae33-3efa9d6008a2",
+    uri: "https://firebasestorage.googleapis.com/v0/b/renting-63833.appspot.com/o/clipart1958534.png?alt=media&token=5d217531-8ab0-4e7f-984e-ba971a8677e5",
   }}
 ></Image>
 <Controller
@@ -66,7 +66,7 @@ return(
         rules={{
           required: true,
           pattern:
-          /^([A-Z]{3}-\d{3,4})$/,
+          /^([A-Z]{3}\d{3,4})$/,
         }}
         render={({ field: { onChange, value } }) => (
           <TextInput
@@ -80,10 +80,10 @@ return(
         name="plate"
       ></Controller>
       {errors.plate?.type == "required" && (
-        <Text style={{ color: "red" }}>la placa es requerida</Text>
+        <Text style={{ color: "red" }}>hace falta la placa</Text>
       )}
       {errors.plate?.type == "pattern" && (
-        <Text style={{ color: "red" }}>debe ingresar una placa valida ejm ABC-123</Text>
+        <Text style={{ color: "red" }}>la placa debe tener la forma ABC123</Text>
       )}
 
       <Controller
@@ -108,7 +108,7 @@ return(
         name="brand"
       ></Controller>
           {errors.brand?.type == "required" && (
-        <Text style={{ color: "red" }}>la marca del vehiculo es requerida</Text>
+        <Text style={{ color: "red" }}>hace falta la marca</Text>
       )}
       <Text style={{ color: `${color}`, textAlign: "center" }}>{message}</Text>
       <View
@@ -120,13 +120,13 @@ return(
         }}
       >
         <Button
-          label="crear"
+          label="guardar"
           style={styles.button}
           icon="login"
           onPress={handleSubmit(Guardar)}
         ></Button>
         <Button
-          label="Rent"
+          label="rentar"
           style={styles.button}
           icon="account"
           onPress={NavigateRenta}
